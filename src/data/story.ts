@@ -56,7 +56,7 @@ export const milestones: Milestone[] = [
 export const person = {
   name: 'Pragati',
   nickname: 'Piku',
-  tagline: 'Happy Birthday in advance, Piku 💕',
+  tagline: 'Happy Birthday in advance 💕',
 }
 
 export type CountdownEvent = {

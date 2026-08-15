@@ -1,6 +1,7 @@
 import { Hero } from './components/Hero'
 import { Timeline } from './components/Timeline'
 import { Countdowns } from './components/Countdowns'
+import { MusicPlayer } from './components/MusicPlayer'
 import { person } from './data/story'
 import './App.css'
 
@@ -15,6 +16,9 @@ function App() {
           multiple counters (birthday, anniversary, ...) via story.ts. */}
       <Countdowns />
       <Timeline />
+      {/* Fixed-position floating button — renders nothing until a music
+          file is dropped into src/assets/audio/. */}
+      <MusicPlayer />
     </main>
   )
 }

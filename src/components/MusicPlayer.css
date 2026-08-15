@@ -1,0 +1,55 @@
+.music-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: var(--rose);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.music-toggle:hover {
+  transform: scale(1.08);
+}
+
+/* Slowly spins while playing, just as a little "yep, it's on" cue. */
+.music-toggle--playing {
+  animation: music-toggle-spin 4s linear infinite;
+}
+
+@keyframes music-toggle-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 720px) {
+  .music-toggle {
+    bottom: 16px;
+    right: 16px;
+    width: 46px;
+    height: 46px;
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-toggle--playing {
+    animation: none;
+  }
+}
