@@ -68,6 +68,36 @@
   box-shadow: var(--shadow);
 }
 
+.timeline-item__photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.timeline-item__photo-button {
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 0;
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease;
+}
+.timeline-item__photo-button:hover,
+.timeline-item__photo-button:focus-visible {
+  transform: scale(1.03);
+}
+
+.timeline-item__photo {
+  display: block;
+  width: 120px;
+  height: 150px;
+  object-fit: cover;
+}
+
 .timeline-item__date {
   font-family: var(--sans);
   font-size: 13px;
@@ -110,5 +140,10 @@
   .timeline-item:nth-child(even) .timeline-item__dot {
     left: 3px;
     right: auto;
+  }
+
+  .timeline-item__photo {
+    width: 96px;
+    height: 120px;
   }
 }

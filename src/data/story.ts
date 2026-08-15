@@ -13,7 +13,9 @@ export type Milestone = {
   date: string
   title: string
   description: string
-  /** Filled in during Phase 3 — paths to photos in src/assets/photos/. */
+  /** Filenames only (e.g. "first-date.jpeg") — files live in
+   *  src/assets/photos/. The actual URL gets resolved later by
+   *  src/utils/photos.ts, so this file never needs an import statement. */
   photos: string[]
 }
 
@@ -24,7 +26,7 @@ export const milestones: Milestone[] = [
     title: 'The Beginning',
     description:
       "We started talking, and somehow never stopped. Every day was full of long conversations we both looked forward to.",
-    photos: [],
+    photos: ['the-beginning.jpg'],
   },
   {
     id: 'meeting-the-families',
@@ -32,14 +34,14 @@ export const milestones: Milestone[] = [
     title: 'Meeting the Families',
     description:
       'Our families met each other for the first time — the moment things started feeling real.',
-    photos: [],
+    photos: ['meeting-the-families.jpeg'],
   },
   {
     id: 'the-proposal',
     date: 'July 2026',
     title: 'Forever Begins',
     description: 'We got engaged, and promised each other forever. 💍',
-    photos: [],
+    photos: ['the-proposal.jpeg'],
   },
   {
     id: 'first-date',
@@ -47,7 +49,7 @@ export const milestones: Milestone[] = [
     title: 'Our First Date',
     description:
       'A long drive and an even longer lunch — our very first date, just the two of us.',
-    photos: [],
+    photos: ['first-date.jpeg'],
   }
 ]
 
