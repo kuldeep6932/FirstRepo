@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useReveal } from '../hooks/useReveal'
 import './Countdown.css'
 
 type CountdownProps = {
@@ -51,8 +52,10 @@ export function Countdown({ label, targetDate }: CountdownProps) {
   const hasArrived =
     timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0
 
+  const { ref, isVisible } = useReveal<HTMLElement>()
+
   return (
-    <section className="countdown">
+    <section ref={ref} className={`countdown reveal ${isVisible ? 'reveal--visible' : ''}`}>
       <h2 className="countdown__heading">Counting Down to {label}</h2>
 
       {hasArrived ? (

@@ -22,8 +22,8 @@ export function Timeline() {
     <section className="timeline">
       <h2 className="timeline__heading">Our Story So Far</h2>
       <div className="timeline__track">
-        {milestones.map((milestone) => (
-          <TimelineItem key={milestone.id} milestone={milestone} />
+        {milestones.map((milestone, index) => (
+          <TimelineItem key={milestone.id} milestone={milestone} revealDelay={index * 120} />
         ))}
       </div>
     </section>
