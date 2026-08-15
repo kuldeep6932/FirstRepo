@@ -1,0 +1,114 @@
+.timeline {
+  padding: 56px 24px 80px;
+}
+
+.timeline__heading {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.timeline__track {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* the vertical line running down the middle, connecting every dot */
+.timeline__track::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--rose-light);
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  position: relative;
+  width: 50%;
+  padding: 0 40px 56px;
+  box-sizing: border-box;
+}
+
+/* zig-zag effect: odd items sit left of the line, even items sit right */
+.timeline-item:nth-child(odd) {
+  left: 0;
+  text-align: right;
+}
+.timeline-item:nth-child(even) {
+  left: 50%;
+  text-align: left;
+}
+
+.timeline-item__dot {
+  position: absolute;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--rose);
+  box-shadow: 0 0 0 4px var(--blush);
+}
+.timeline-item:nth-child(odd) .timeline-item__dot {
+  right: -7px;
+}
+.timeline-item:nth-child(even) .timeline-item__dot {
+  left: -7px;
+}
+
+.timeline-item__card {
+  display: inline-block;
+  text-align: left;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow);
+}
+
+.timeline-item__date {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 6px;
+}
+
+.timeline-item__title {
+  font-family: var(--heading);
+  font-size: 22px;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.timeline-item__description {
+  font-size: 15px;
+  color: var(--text-soft);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .timeline__track::before {
+    left: 10px;
+  }
+
+  .timeline-item,
+  .timeline-item:nth-child(odd),
+  .timeline-item:nth-child(even) {
+    width: 100%;
+    left: 0;
+    text-align: left;
+    padding: 0 0 40px 40px;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-item__dot,
+  .timeline-item:nth-child(even) .timeline-item__dot {
+    left: 3px;
+    right: auto;
+  }
+}

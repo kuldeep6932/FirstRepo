@@ -1,0 +1,58 @@
+.countdown {
+  padding: 56px 24px 80px;
+  text-align: center;
+  background: var(--blush);
+}
+
+.countdown__heading {
+  margin-bottom: 32px;
+}
+
+.countdown__units {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.countdown__unit {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 28px;
+  min-width: 90px;
+  box-shadow: var(--shadow);
+}
+
+.countdown__value {
+  display: block;
+  font-family: var(--heading);
+  font-size: 40px;
+  color: var(--rose);
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown__label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-top: 4px;
+}
+
+.countdown__today {
+  font-family: var(--heading);
+  font-size: 32px;
+  color: var(--rose);
+}
+
+@media (max-width: 720px) {
+  .countdown__unit {
+    min-width: 68px;
+    padding: 14px 16px;
+  }
+  .countdown__value {
+    font-size: 28px;
+  }
+}

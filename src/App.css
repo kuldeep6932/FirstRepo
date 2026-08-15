@@ -1,0 +1,8 @@
+/* .app is just a vertical stack — each phase adds another section
+   (Hero, Timeline, Gallery, ...) below the last, so it shouldn't force
+   everything to the vertical center like a single-screen placeholder did. */
+.app {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
