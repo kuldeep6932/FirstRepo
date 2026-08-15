@@ -54,7 +54,7 @@ export const milestones: Milestone[] = [
 ]
 
 export const person = {
-  name: 'Pragati',
+  name: '🐰 🤍🐰',
   nickname: 'Piku',
   tagline: 'Happy Birthday in advance 💕',
 }
