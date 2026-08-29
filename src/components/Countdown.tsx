@@ -58,9 +58,9 @@ export function Countdown({ label, targetDate, message, isPiku }: CountdownProps
     return () => clearInterval(timerId)
   }, [targetDate])
 
-  // const hasArrived =
-  //   timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0
-  const hasArrived = true
+  const hasArrived =
+    timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0
+  // const hasArrived = true
 
   const { ref, isVisible } = useReveal<HTMLElement>()
 
