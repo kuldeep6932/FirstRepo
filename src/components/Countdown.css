@@ -41,12 +41,6 @@
   margin-top: 4px;
 }
 
-.countdown__today {
-  font-family: var(--heading);
-  font-size: 32px;
-  color: var(--rose);
-}
-
 @media (max-width: 720px) {
   .countdown__unit {
     min-width: 68px;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useReveal } from '../hooks/useReveal'
+import { BirthdayCelebration } from './BirthdayCelebration'
 import './Countdown.css'
 
 type CountdownProps = {
@@ -7,6 +8,10 @@ type CountdownProps = {
   label: string
   /** ISO date string, e.g. '2026-08-30' */
   targetDate: string
+  /** Shown by <BirthdayCelebration> once the day has arrived. */
+  message: string
+  /** Whether the Piku password was verified — gates the love letter. */
+  isPiku: boolean
 }
 
 type TimeLeft = {
@@ -17,8 +22,12 @@ type TimeLeft = {
 }
 
 function getTimeLeft(targetDate: string): TimeLeft {
-  const diffMs = Math.max(0, new Date(targetDate).getTime() - Date.now())
+  // targetDate is a date in IST, e.g. "2026-08-30"
+  const target = new Date(`${targetDate}T00:00:00+05:30`)
+
+  const diffMs = Math.max(0, target.getTime() - Date.now())
   const totalSeconds = Math.floor(diffMs / 1000)
+
   return {
     days: Math.floor(totalSeconds / (3600 * 24)),
     hours: Math.floor((totalSeconds % (3600 * 24)) / 3600),
@@ -27,7 +36,7 @@ function getTimeLeft(targetDate: string): TimeLeft {
   }
 }
 
-export function Countdown({ label, targetDate }: CountdownProps) {
+export function Countdown({ label, targetDate, message, isPiku }: CountdownProps) {
   // Lazy initializer (the () => ... form) so getTimeLeft only runs once,
   // for the very first render, instead of on every re-render.
   const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(targetDate))
@@ -49,17 +58,20 @@ export function Countdown({ label, targetDate }: CountdownProps) {
     return () => clearInterval(timerId)
   }, [targetDate])
 
-  const hasArrived =
-    timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0
+  // const hasArrived =
+  //   timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0
+  const hasArrived = true
 
   const { ref, isVisible } = useReveal<HTMLElement>()
 
   return (
     <section ref={ref} className={`countdown reveal ${isVisible ? 'reveal--visible' : ''}`}>
+      {!hasArrived && (
       <h2 className="countdown__heading">Counting Down to {label}</h2>
+      )}
 
       {hasArrived ? (
-        <p className="countdown__today">It's here! Happy {label}! 🎉</p>
+        <BirthdayCelebration label={label} message={message} isPiku={isPiku} />
       ) : (
         <div className="countdown__units">
           <CountdownUnit value={timeLeft.days} label="Days" />

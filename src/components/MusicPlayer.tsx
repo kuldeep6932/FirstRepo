@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { getBackgroundMusicUrl } from '../utils/audio'
+import { CANDLES_BLOWN_EVENT, getBackgroundMusicUrl } from '../utils/audio'
 import './MusicPlayer.css'
 
 /**
@@ -52,6 +52,27 @@ export function MusicPlayer() {
       })
 
     return () => removeFallbackListeners?.()
+  }, [musicUrl])
+
+  // Separate effect, separate concern: this one doesn't care WHY playback
+  // might already be blocked or already running, it just reacts to
+  // BirthdayCelebration's "all candles are out" announcement (see
+  // CANDLES_BLOWN_EVENT in utils/audio.ts) by trying to start the music.
+  // .play() on an already-playing <audio> is a harmless no-op, so this is
+  // safe to fire even if music is already going.
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio || !musicUrl) return
+
+    function handleCandlesBlown() {
+      audio
+        ?.play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {})
+    }
+
+    window.addEventListener(CANDLES_BLOWN_EVENT, handleCandlesBlown)
+    return () => window.removeEventListener(CANDLES_BLOWN_EVENT, handleCandlesBlown)
   }, [musicUrl])
 
   // No track added yet — render nothing rather than a button that does

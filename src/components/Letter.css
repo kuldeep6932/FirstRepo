@@ -1,0 +1,114 @@
+.letter-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.letter__locked-note {
+  font-size: 14px;
+  color: var(--text-soft);
+  animation: letter-open 0.4s ease both;
+}
+
+.envelope {
+  position: relative;
+  width: 240px;
+  height: 150px;
+  border: none;
+  border-radius: 10px;
+  background: var(--rose-light);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 14px;
+  transition: transform 0.2s ease;
+}
+.envelope:hover {
+  transform: translateY(-2px);
+}
+
+/* The triangular flap, drawn with clip-path rather than an actual image. */
+.envelope__flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: #fff;
+  clip-path: polygon(0 0, 100% 0, 50% 70%);
+}
+
+.envelope__seal {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--rose);
+  font-size: 22px;
+}
+
+.envelope__label {
+  position: relative;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+.letter {
+  width: 100%;
+  max-width: 560px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: letter-open 0.5s ease both;
+}
+
+.letter__line {
+  font-family: var(--heading);
+  font-size: 18px;
+  line-height: 145%;
+  color: var(--text);
+  text-align: left;
+}
+
+.letter__reseal {
+  align-self: center;
+  margin-top: 8px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--rose);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 18px;
+  cursor: pointer;
+}
+
+@keyframes letter-open {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter {
+    animation: none;
+  }
+}

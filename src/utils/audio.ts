@@ -16,3 +16,11 @@ export function getBackgroundMusicUrl(): string | undefined {
   const paths = Object.keys(modules)
   return paths.length > 0 ? modules[paths[0]] : undefined
 }
+
+/**
+ * Window event name used to say "the candles are all blown out" without
+ * BirthdayCelebration and MusicPlayer needing to know about each other —
+ * see the dispatch in BirthdayCelebration.tsx and the listener in
+ * MusicPlayer.tsx.
+ */
+export const CANDLES_BLOWN_EVENT = 'candles-blown'

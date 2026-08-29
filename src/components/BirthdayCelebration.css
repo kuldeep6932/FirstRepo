@@ -1,0 +1,196 @@
+.celebration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.celebration__prompt {
+  font-family: var(--heading);
+  font-size: 28px;
+  color: var(--rose);
+}
+
+.celebration__message {
+  max-width: 480px;
+  font-family: var(--heading);
+  font-size: 20px;
+  color: var(--text);
+  animation: fade-in-up 0.6s ease both;
+}
+
+.celebration__replay {
+  font: inherit;
+  font-size: 14px;
+  color: var(--rose);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease;
+}
+.celebration__replay:hover {
+  transform: translateY(-2px);
+}
+
+/* ---------- the cake ---------- */
+
+.cake {
+  position: relative;
+  width: 220px;
+  /* Room above the base layers for the candles to stand in. */
+  padding-top: 70px;
+}
+
+.cake__layer {
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+.cake__layer--top {
+  width: 140px;
+  height: 34px;
+  margin: 0 auto;
+  background: var(--rose-light);
+}
+.cake__layer--middle {
+  width: 180px;
+  height: 38px;
+  margin: 6px auto 0;
+  background: #fff;
+  border: 1px solid var(--border);
+}
+.cake__layer--base {
+  width: 220px;
+  height: 42px;
+  margin: 6px auto 0;
+  background: var(--rose-light);
+}
+
+.cake__candles {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 18px;
+}
+
+.candle {
+  /* Reset button chrome — this is a click target, not a styled <button>. */
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+.candle:disabled {
+  cursor: default;
+}
+
+.candle__stick {
+  width: 8px;
+  height: 40px;
+  border-radius: 2px;
+  background: repeating-linear-gradient(180deg, var(--rose) 0 8px, #fff 8px 16px);
+}
+
+.candle__flame {
+  width: 10px;
+  height: 16px;
+  margin-bottom: 2px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: radial-gradient(circle at 50% 70%, #fff5c2 0%, #ffb703 55%, #fb5607 100%);
+  box-shadow: 0 0 10px 2px rgba(255, 183, 3, 0.6);
+  animation: flicker 0.9s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* Blown out: swap the flame for a fading wisp of smoke instead of just
+   vanishing, so the click has a visible result. */
+.candle__flame--out {
+  width: 3px;
+  height: 12px;
+  margin-bottom: 2px;
+  background: var(--text-soft);
+  box-shadow: none;
+  border-radius: 2px;
+  opacity: 0;
+  animation: smoke 0.8s ease-out forwards;
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    transform: scale(1) rotate(-2deg);
+  }
+  50% {
+    transform: scale(1.08) rotate(2deg);
+  }
+}
+
+@keyframes smoke {
+  0% {
+    opacity: 0.6;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-18px) scale(1.6);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- confetti ---------- */
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 20;
+}
+
+.confetti__piece {
+  position: absolute;
+  top: -12px;
+  width: 8px;
+  height: 14px;
+  opacity: 0.9;
+  animation-name: confetti-fall;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+@keyframes confetti-fall {
+  from {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.9;
+  }
+  to {
+    transform: translateY(110vh) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .candle__flame,
+  .candle__flame--out,
+  .confetti__piece,
+  .celebration__message {
+    animation: none;
+  }
+}
