@@ -9,7 +9,7 @@ type AccessGateProps = {
   onResolved: (result: AccessResult) => void
 }
 
-const PASSWORD_HINT = 'Hint: the vegetable you keep telling me to eat 😄'
+const PASSWORD_HINT = 'Hint: you already know'
 
 /**
  * The very first thing anyone sees: a full-screen question before the rest
