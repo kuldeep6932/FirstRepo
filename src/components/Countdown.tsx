@@ -46,7 +46,7 @@ export function Countdown({ label, targetDate, message, isPiku }: CountdownProps
     // render-in/render-out flow — here, a timer that keeps running in the
     // background regardless of renders. This function runs once after
     // the first render (because the dependency array [targetDate] below
-    // never changes for this page).
+    // never changes for this page). 
     const timerId = setInterval(() => {
       setTimeLeft(getTimeLeft(targetDate))
     }, 1000)
