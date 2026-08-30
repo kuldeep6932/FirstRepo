@@ -1,28 +1,30 @@
 import { useState, type FormEvent } from 'react'
+import { decryptChat, type ChatMessage } from '../utils/chat'
 import './AccessGate.css'
 
+export type AccessResult = { isPiku: false } | { isPiku: true; chatMessages: ChatMessage[] }
+
 type AccessGateProps = {
-  /** Called once, the moment a choice is locked in: true for Piku (password
-   *  verified), false for a guest. */
-  onResolved: (isPiku: boolean) => void
+  /** Called once, the moment a choice is locked in. */
+  onResolved: (result: AccessResult) => void
 }
 
-// Hardcoded on purpose — this isn't real security (anyone could read this
-// straight out of the page's source), just a fun "who's asking" gate so
-// the love letter stays a surprise for anyone else who gets sent the link.
-const PIKU_PASSWORD = 'baingan'
 const PASSWORD_HINT = 'Hint: the vegetable you keep telling me to eat 😄'
 
 /**
  * The very first thing anyone sees: a full-screen question before the rest
  * of the page is usable. Picking "Just visiting" resolves straight to
- * guest. Picking "I'm Piku" asks for the password first — get it right and
- * the gate resolves to Piku, unlocking <Letter> further down the page.
+ * guest. Picking "I'm Piku" asks for the password — there's no hardcoded
+ * password to compare against anywhere in this file; getting it right is
+ * *how* src/data/chat.enc.json (the encrypted WhatsApp export — see
+ * src/utils/chat.ts) decrypts. Wrong password just means decryption fails,
+ * same as it would for anyone poking at the file directly in dev tools.
  */
 export function AccessGate({ onResolved }: AccessGateProps) {
   const [step, setStep] = useState<'choose' | 'password'>('choose')
   const [input, setInput] = useState('')
   const [wrongAttempt, setWrongAttempt] = useState(false)
+  const [isChecking, setIsChecking] = useState(false)
   // Once a choice is locked in, the gate is done — render nothing rather
   // than an empty overlay sitting on top of the page.
   const [isResolved, setIsResolved] = useState(false)
@@ -31,14 +33,26 @@ export function AccessGate({ onResolved }: AccessGateProps) {
 
   function chooseGuest() {
     setIsResolved(true)
-    onResolved(false)
+    onResolved({ isPiku: false })
   }
 
-  function submitPassword(event: FormEvent) {
+  async function submitPassword(event: FormEvent) {
     event.preventDefault()
-    if (input.trim().toLowerCase() === PIKU_PASSWORD) {
+    setIsChecking(true)
+    // Lazy import: guests (and anyone who hasn't tried "I'm Piku" yet)
+    // never fetch this — it's a multi-megabyte file, code-split into its
+    // own chunk by Vite, only requested the moment someone actually
+    // attempts the password.
+    const { default: encryptedChat } = await import('../data/chat.enc.json')
+    // Normalized the same way scripts/encrypt-chat.mjs's input was, so
+    // "Baingan"/"BAINGAN"/"baingan " all derive the identical key.
+    const password = input.trim().toLowerCase()
+    const chatMessages = await decryptChat(password, encryptedChat)
+    setIsChecking(false)
+
+    if (chatMessages) {
       setIsResolved(true)
-      onResolved(true)
+      onResolved({ isPiku: true, chatMessages })
     } else {
       setWrongAttempt(true)
     }
@@ -79,8 +93,8 @@ export function AccessGate({ onResolved }: AccessGateProps) {
             />
             <p className="access-gate__hint">{PASSWORD_HINT}</p>
             {wrongAttempt && <p className="access-gate__error">That's not it — try again 🥲</p>}
-            <button type="submit" className="access-gate__submit">
-              Unlock 🔓
+            <button type="submit" className="access-gate__submit" disabled={isChecking}>
+              {isChecking ? 'Unlocking…' : 'Unlock 🔓'}
             </button>
             <button type="button" className="access-gate__back" onClick={() => setStep('choose')}>
               ← back

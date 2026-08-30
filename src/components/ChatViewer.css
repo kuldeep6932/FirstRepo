@@ -1,0 +1,173 @@
+.chat-toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: var(--rose);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+.chat-toggle:hover {
+  transform: scale(1.08);
+}
+
+.chat-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  background: var(--blush);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-viewer__header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--rose);
+  box-shadow: var(--shadow);
+}
+
+.chat-viewer__title {
+  font-family: var(--heading);
+  font-size: 20px;
+  color: #fff;
+}
+
+.chat-viewer__close {
+  font-size: 28px;
+  line-height: 1;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.chat-viewer__scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* On a wide screen, a bubble pinned to the far left and one pinned to the
+   far right end up looking disconnected — like two separate chats instead
+   of one. Phones don't have this problem (there's no room for it), so
+   this only kicks in above the existing phone breakpoint: cap the column
+   width and center it, same as WhatsApp's own desktop app does, so both
+   sides of the conversation stay close together. */
+@media (min-width: 721px) {
+  .chat-viewer__scroll {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+}
+
+.chat-viewer__load-more {
+  align-self: center;
+  margin-bottom: 16px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--rose);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 18px;
+  cursor: pointer;
+}
+
+.chat-viewer__date-separator {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+.chat-viewer__date-separator span {
+  font-size: 12px;
+  color: var(--text-soft);
+  background: #fff;
+  border-radius: 999px;
+  padding: 4px 14px;
+  box-shadow: var(--shadow);
+}
+
+.chat-bubble--system {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-soft);
+  margin: 10px 0;
+}
+
+.chat-bubble-row {
+  display: flex;
+  margin: 3px 0;
+}
+.chat-bubble-row--right {
+  justify-content: flex-end;
+}
+
+.chat-bubble {
+  max-width: min(75%, 480px);
+  border-radius: 14px;
+  padding: 8px 12px;
+  box-shadow: var(--shadow);
+}
+.chat-bubble--left {
+  background: #fff;
+  border-bottom-left-radius: 2px;
+}
+.chat-bubble--right {
+  background: var(--rose-light);
+  border-bottom-right-radius: 2px;
+}
+
+.chat-bubble__text {
+  font-size: 15px;
+  color: var(--text);
+  white-space: pre-wrap;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.chat-bubble__media {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--text-soft);
+  text-align: left;
+}
+
+.chat-bubble__time {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--text-soft);
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .chat-toggle {
+    bottom: 16px;
+    left: 16px;
+    width: 46px;
+    height: 46px;
+    font-size: 18px;
+  }
+
+  .chat-bubble {
+    max-width: 85%;
+  }
+}
